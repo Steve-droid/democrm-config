@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: democrm
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:Steve-droid/democrm-chart.git
+    targetRevision: HEAD
+    path: .
+    helm:
+      releaseName: democrm
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: democrm
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
